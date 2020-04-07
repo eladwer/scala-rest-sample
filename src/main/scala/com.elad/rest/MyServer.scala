@@ -45,7 +45,7 @@ object MyServer extends StreamApp[IO] with Http4sDsl[IO] {
 
   def stream(args: List[String], requestShutdown: IO[Unit])=
     BlazeBuilder[IO]
-      .bindHttp(9090, "localhost")
+      .bindLocal(9090)
       .mountService(service, "/")
       .serve
 }

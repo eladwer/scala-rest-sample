@@ -18,3 +18,19 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % PotgresqlVersion,
   "com.zaxxer"     % "HikariCP"   % HikariVersion
 )
+
+
+// No need to run tests while building jar
+test in assembly := {}
+
+mainClass in assembly := Some("com.elad.rest.MyServer")
+
+// Simple and constant jar name
+assemblyJarName in assembly := s"app-assembly.jar"
+// Merge strategy for assembling conflicts
+assemblyMergeStrategy in assembly := {
+  case PathList("reference.conf") => MergeStrategy.concat
+  case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
+  case _ => MergeStrategy.first
+}
+
