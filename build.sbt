@@ -6,18 +6,22 @@ scalaVersion := "2.12.7"
 val PotgresqlVersion = "42.2.2"
 val HikariVersion = "3.1.0"
 val CirceVersion = "0.9.3"
-val Http4sVersion = "0.18.11"
+val http4sVersion = "0.21.2"
 
 libraryDependencies ++= Seq(
-  "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
-  "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
-  "org.http4s" %% "http4s-dsl"          % Http4sVersion,
-  "org.http4s" %% "http4s-circe"        % Http4sVersion,
-  "io.circe"   %% "circe-generic"       % CirceVersion,
-
+  "org.http4s" %% "http4s-dsl" % http4sVersion,
+  "org.http4s" %% "http4s-blaze-server" % http4sVersion,
+  "org.http4s" %% "http4s-blaze-client" % http4sVersion,
+  "org.http4s" %% "http4s-circe"        % http4sVersion,
+  "io.circe" %% "circe-generic" % "0.13.0",
+  
+  // Optional for string interpolation to JSON model
+  "io.circe" %% "circe-literal" % "0.13.0",
   "org.postgresql" % "postgresql" % PotgresqlVersion,
   "com.zaxxer"     % "HikariCP"   % HikariVersion
 )
+
+scalacOptions ++= Seq("-Ypartial-unification")
 
 
 // No need to run tests while building jar
