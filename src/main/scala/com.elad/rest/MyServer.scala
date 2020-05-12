@@ -24,6 +24,11 @@ object MyServer extends IOApp {
   val root = Root / SUB
 
   val service = HttpRoutes.of[IO] {
+
+    case GET -> Root =>{
+      println("get rootttt")
+      IO{Response(Ok)}
+    }
     case GET -> root / id =>
       println("get")
       Subscription.readById(id).flatMap(_.fold(NotFound())(Ok(_)))
@@ -58,7 +63,7 @@ object MyServer extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
     BlazeServerBuilder[IO]
-      .bindHttp(8080, "0.0.0.0")
+      .bindHttp(80, "0.0.0.0")
       .withHttpApp(routes)
       .serve
       .compile
